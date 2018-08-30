@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 
 	"github.com/eoscanada/eos-go/ecc"
+	"github.com/palantir/stacktrace"
 )
 
 type P2PMessage interface {
@@ -305,8 +306,12 @@ func (t *TransactionWithID) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &packed); err != nil {
 			return err
 		}
+		transactionID, err := packed.ID()
+		if err != nil {
+			return stacktrace.Propagate(err, "Failed to get transaction ID")
+		}
 		*t = TransactionWithID{
-			ID:     packed.ID(),
+			ID:     transactionID,
 			Packed: &packed,
 		}
 
@@ -360,8 +365,12 @@ func (t *TransactionWithID) UnmarshalJSON(data []byte) error {
 			return err
 		}
 
+		transactionID, err := packed.ID()
+		if err != nil {
+			return stacktrace.Propagate(err, "Failed to get transaction ID")
+		}
 		*t = TransactionWithID{
-			ID:     packed.ID(),
+			ID:     transactionID,
 			Packed: &packed,
 		}
 	default:

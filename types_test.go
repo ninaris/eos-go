@@ -421,11 +421,11 @@ func FixmeTestJsonWithZLIBcompression(t *testing.T) {
 	assert.NoError(t, err)
 
 	EqualNoDiff(t,
-		unpacked.packed.PackedTransaction,
-		packed.PackedTransaction,
+		unpacked.packed.PackedTrx,
+		packed.PackedTrx,
 		fmt.Sprintf("\nActual: Unpack -> Pack (len=%d)\nExpected: Pack (len=%d)",
-			len(unpacked.packed.PackedTransaction),
-			len(packed.PackedTransaction)))
+			len(unpacked.packed.PackedTrx),
+			len(packed.PackedTrx)))
 }
 
 func EqualNoDiff(t *testing.T, expected interface{}, actual interface{}, message string) bool {
